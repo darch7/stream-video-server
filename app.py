@@ -1,4 +1,5 @@
 from flask import Flask, send_from_directory, request
+import os
 
 app = Flask(__name__)
 
@@ -19,3 +20,8 @@ def video():
     ip = request.remote_addr
     print(f"[VIDEO] Reproduciendo desde IP: {ip}")
     return send_from_directory('static', 'video.mp4')
+
+# ⬇️ ESTO ES FUNDAMENTAL PARA QUE FUNCIONE EN RENDER
+if __name__ == '__main__':
+    port = int(os.environ.get("PORT", 5000))  # Render define el puerto
+    app.run(host='0.0.0.0', port=port)
